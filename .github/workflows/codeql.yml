@@ -1,0 +1,23 @@
+name: CodeQL
+  on:
+    push:
+      branches: [ main, develop, release-pinned ]
+    workflow_dispatch:
+  
+  jobs:
+    analyze:
+      name: Analyze JavaScript
+      runs-on: ubuntu-latest
+      permissions:
+        actions: read
+        contents: read
+        security-events: write
+      steps:
+        - uses: actions/checkout@v4
+        - uses: github/codeql-action/init@v3
+          with:
+            languages: javascript-typescript
+            queries: security-extended
+        - uses: github/codeql-action/analyze@v3
+          with:
+            category: "/language:javascript-typescript"
